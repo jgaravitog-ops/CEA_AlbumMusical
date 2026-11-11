@@ -2,15 +2,15 @@ package com.tiendamusica.domain.model.entity;
 
 import java.util.UUID;
 
-public class Artista {
+public class CompaniaDiscografica {
 
     private final UUID id;
     private String nombre;
-    private String tipo;
+    private String pais;
     private String descripcion;
 
-    public Artista(UUID id, String nombre, String tipo,
-                   String descripcion) {
+    public CompaniaDiscografica(UUID id, String nombre,
+                                String pais, String descripcion) {
 
         if (id == null) {
             throw new IllegalArgumentException("El ID es obligatorio");
@@ -20,13 +20,9 @@ public class Artista {
             throw new IllegalArgumentException("El nombre es obligatorio");
         }
 
-        if (tipo == null || tipo.isBlank()) {
-            throw new IllegalArgumentException("El tipo de artista es obligatorio");
-        }
-
         this.id = id;
         this.nombre = nombre;
-        this.tipo = tipo;
+        this.pais = pais;
         this.descripcion = descripcion;
     }
 }

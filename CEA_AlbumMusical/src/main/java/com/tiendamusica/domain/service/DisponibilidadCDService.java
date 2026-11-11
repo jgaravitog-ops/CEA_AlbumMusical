@@ -1,6 +1,7 @@
 package com.tiendamusica.domain.service;
 
 import com.tiendamusica.domain.model.entity.CD;
+import com.tiendamusica.domain.exception.InventoryMismatchException;
 import com.tiendamusica.domain.model.aggregate.Inventario;
 import com.tiendamusica.domain.model.valueobject.Cantidad;
 
@@ -19,8 +20,8 @@ public class DisponibilidadCDService {
         }
 
         if (!cd.getId().equals(inventario.getCdId())) {
-            throw new IllegalArgumentException(
-                    "El inventario no corresponde al CD indicado");
+            throw new InventoryMismatchException(
+            "El inventario no corresponde al CD indicado");
         }
 
         return inventario.getCantidadDisponible().getValor()

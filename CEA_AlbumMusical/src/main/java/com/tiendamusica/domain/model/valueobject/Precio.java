@@ -1,5 +1,7 @@
 package com.tiendamusica.domain.model.valueobject;
 
+import com.tiendamusica.domain.exception.InvalidPriceException;
+
 import java.math.BigDecimal;
 
 public class Precio {
@@ -10,13 +12,13 @@ public class Precio {
     public Precio(BigDecimal valor, String moneda) {
 
         if (valor == null || valor.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException(
-                    "El precio no puede ser nulo ni negativo");
+            throw new InvalidPriceException(
+            "El precio no puede ser nulo ni negativo");
         }
 
         if (valor.scale() > 2) {
-            throw new IllegalArgumentException(
-                    "El precio no puede tener más de dos decimales");
+            throw new InvalidPriceException(
+            "El precio no puede tener más de dos decimales");
         }
 
         if (moneda == null || !moneda.matches("[A-Z]{3}")) {

@@ -4,6 +4,8 @@ import com.tiendamusica.domain.event.DomainEvent;
 import com.tiendamusica.domain.event.ObraMusicalRegistrada;
 import com.tiendamusica.domain.model.entity.Pista;
 import com.tiendamusica.domain.model.valueobject.AnioPublicacion;
+import com.tiendamusica.domain.exception.InvalidMusicalWorkException;
+import com.tiendamusica.domain.exception.InvalidTrackException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +30,18 @@ public class ObraMusical {
             String descripcion) {
 
         if (id == null) {
-            throw new IllegalArgumentException("El ID es obligatorio");
+            throw new InvalidMusicalWorkException(
+            "El ID de la obra es obligatorio");
         }
 
         if (titulo == null || titulo.isBlank()) {
-            throw new IllegalArgumentException("El título es obligatorio");
+            throw new InvalidMusicalWorkException(
+            "El título de la obra es obligatorio");
         }
 
         if (anioPublicacion == null) {
-            throw new IllegalArgumentException("El año es obligatorio");
+            throw new InvalidMusicalWorkException(
+            "El año de publicación es obligatorio");
         }
 
         this.id = id;
@@ -55,16 +60,16 @@ public class ObraMusical {
     public void agregarPista(Pista pista) {
 
         if (pista == null) {
-            throw new IllegalArgumentException(
-                    "La pista no puede ser nula");
+            throw new InvalidTrackException(
+            "La pista no puede ser nula");
         }
 
         boolean numeroExistente = pistas.stream()
                 .anyMatch(p -> p.getNumero() == pista.getNumero());
 
         if (numeroExistente) {
-            throw new IllegalArgumentException(
-                    "Ya existe una pista con ese número");
+            throw new InvalidTrackException(
+            "Ya existe una pista con ese número");
         }
 
         pistas.add(pista);

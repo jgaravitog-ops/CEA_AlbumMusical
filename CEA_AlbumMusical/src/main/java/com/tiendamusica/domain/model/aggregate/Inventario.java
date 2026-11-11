@@ -3,6 +3,7 @@ package com.tiendamusica.domain.model.aggregate;
 import com.tiendamusica.domain.model.valueobject.Cantidad;
 import com.tiendamusica.domain.event.DomainEvent;
 import com.tiendamusica.domain.event.ExistenciasActualizadas;
+import com.tiendamusica.domain.exception.InvalidQuantityException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,8 @@ public class Inventario {
         }
 
         if (cantidadDisponible == null) {
-            throw new IllegalArgumentException(
-                    "La cantidad es obligatoria");
+            throw new InvalidQuantityException(
+            "La cantidad inicial del inventario es obligatoria");
         }
 
         this.id = id;
@@ -43,8 +44,8 @@ public class Inventario {
     public void actualizarExistencias(Cantidad nuevaCantidad) {
 
         if (nuevaCantidad == null) {
-            throw new IllegalArgumentException(
-                "La nueva cantidad no puede ser nula");
+            throw new InvalidQuantityException(
+            "La nueva cantidad no puede ser nula");
         }
 
         int cantidadAnterior = cantidadDisponible.getValor();

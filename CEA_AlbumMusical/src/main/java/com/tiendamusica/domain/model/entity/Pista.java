@@ -1,5 +1,7 @@
 package com.tiendamusica.domain.model.entity;
 
+import com.tiendamusica.domain.exception.InvalidTrackException;
+
 import java.util.UUID;
 
 public class Pista {
@@ -13,19 +15,19 @@ public class Pista {
                  int duracionSegundos) {
 
         if (id == null) {
-            throw new IllegalArgumentException("El ID es obligatorio");
+            throw new InvalidTrackException("El ID de la pista es obligatorio");
         }
 
         if (titulo == null || titulo.isBlank()) {
-            throw new IllegalArgumentException("El título es obligatorio");
+            throw new InvalidTrackException("El título de la pista es obligatorio");
         }
 
         if (numero <= 0) {
-            throw new IllegalArgumentException("Número de pista inválido");
+            throw new InvalidTrackException("El número de pista debe ser mayor que cero");
         }
 
         if (duracionSegundos <= 0) {
-            throw new IllegalArgumentException("Duración inválida");
+            throw new InvalidTrackException("La duración debe ser mayor que cero");
         }
 
         this.id = id;

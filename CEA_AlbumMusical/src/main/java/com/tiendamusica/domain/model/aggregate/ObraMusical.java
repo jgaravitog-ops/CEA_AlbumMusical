@@ -1,5 +1,7 @@
 package com.tiendamusica.domain.model.aggregate;
 
+import com.tiendamusica.domain.event.DomainEvent;
+import com.tiendamusica.domain.event.ObraMusicalRegistrada;
 import com.tiendamusica.domain.model.entity.Pista;
 import com.tiendamusica.domain.model.valueobject.AnioPublicacion;
 
@@ -16,6 +18,7 @@ public class ObraMusical {
     private String descripcion;
 
     private final List<Pista> pistas;
+    private final List<DomainEvent> eventosDominio = new ArrayList<>();
 
     public ObraMusical(
             UUID id,
@@ -42,6 +45,10 @@ public class ObraMusical {
         this.anioPublicacion = anioPublicacion;
         this.descripcion = descripcion;
         this.pistas = new ArrayList<>();
+
+        eventosDominio.add(
+            new ObraMusicalRegistrada(this.id, this.titulo)
+        );
     }
 
     // Agrega una pista al agregado
@@ -78,5 +85,13 @@ public class ObraMusical {
 
     public AnioPublicacion getAnioPublicacion() {
         return anioPublicacion;
+    }
+    
+    public List<DomainEvent> obtenerEventosDominio() {
+        return List.copyOf(eventosDominio);
+    }
+
+    public void limpiarEventosDominio() {
+        eventosDominio.clear();
     }
 }

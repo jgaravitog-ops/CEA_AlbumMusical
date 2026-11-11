@@ -1,4 +1,7 @@
-package com.tiendamusica.domain.model.entity;
+package com.tiendamusica.domain.model.aggregate;
+
+import com.tiendamusica.domain.model.entity.Pista;
+import com.tiendamusica.domain.model.valueobject.AnioPublicacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +12,16 @@ public class ObraMusical {
     private final UUID id;
     private String titulo;
     private String genero;
-    private int anioPublicacion;
+    private AnioPublicacion anioPublicacion;
     private String descripcion;
+
     private final List<Pista> pistas;
 
     public ObraMusical(
             UUID id,
             String titulo,
             String genero,
-            int anioPublicacion,
+            AnioPublicacion anioPublicacion,
             String descripcion) {
 
         if (id == null) {
@@ -28,9 +32,8 @@ public class ObraMusical {
             throw new IllegalArgumentException("El título es obligatorio");
         }
 
-        if (anioPublicacion <= 0 ||
-                anioPublicacion > java.time.Year.now().getValue()) {
-            throw new IllegalArgumentException("Año de publicación inválido");
+        if (anioPublicacion == null) {
+            throw new IllegalArgumentException("El año es obligatorio");
         }
 
         this.id = id;
@@ -41,20 +44,28 @@ public class ObraMusical {
         this.pistas = new ArrayList<>();
     }
 
+    // Agrega una pista al agregado
     public void agregarPista(Pista pista) {
+
         if (pista == null) {
-            throw new IllegalArgumentException("La pista no puede ser nula");
+            throw new IllegalArgumentException(
+                    "La pista no puede ser nula");
         }
 
-        boolean numeroRepetido = pistas.stream()
+        boolean numeroExistente = pistas.stream()
                 .anyMatch(p -> p.getNumero() == pista.getNumero());
 
-        if (numeroRepetido) {
+        if (numeroExistente) {
             throw new IllegalArgumentException(
                     "Ya existe una pista con ese número");
         }
 
         pistas.add(pista);
+    }
+
+    // Consulta las pistas sin permitir modificaciones externas
+    public List<Pista> getPistas() {
+        return List.copyOf(pistas);
     }
 
     public UUID getId() {
@@ -65,7 +76,7 @@ public class ObraMusical {
         return titulo;
     }
 
-    public List<Pista> getPistas() {
-        return List.copyOf(pistas);
+    public AnioPublicacion getAnioPublicacion() {
+        return anioPublicacion;
     }
 }

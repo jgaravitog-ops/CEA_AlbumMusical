@@ -1,29 +1,32 @@
 package com.tiendamusica.domain.model.entity;
 
-import java.math.BigDecimal;
+import com.tiendamusica.domain.model.valueobject.Precio;
 import java.util.UUID;
 
 public class CD {
 
     private final UUID id;
-    private String codigoBarras;
-    private String formato;
-    private BigDecimal precio;
-    private UUID edicionId;
+    private final String codigoBarras;
+    private final String formato;
+    private final Precio precio;
+    private final UUID edicionId;
 
     public CD(UUID id, String codigoBarras, String formato,
-              BigDecimal precio, UUID edicionId) {
+              Precio precio, UUID edicionId) {
 
         if (id == null || edicionId == null) {
-            throw new IllegalArgumentException("Los identificadores son obligatorios");
+            throw new IllegalArgumentException(
+                    "Los identificadores son obligatorios");
         }
 
         if (codigoBarras == null || codigoBarras.isBlank()) {
-            throw new IllegalArgumentException("El código de barras es obligatorio");
+            throw new IllegalArgumentException(
+                    "El código de barras es obligatorio");
         }
 
-        if (precio == null || precio.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("El precio no puede ser negativo");
+        if (precio == null) {
+            throw new IllegalArgumentException(
+                    "El precio es obligatorio");
         }
 
         this.id = id;
@@ -31,5 +34,13 @@ public class CD {
         this.formato = formato;
         this.precio = precio;
         this.edicionId = edicionId;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public Precio getPrecio() {
+        return precio;
     }
 }

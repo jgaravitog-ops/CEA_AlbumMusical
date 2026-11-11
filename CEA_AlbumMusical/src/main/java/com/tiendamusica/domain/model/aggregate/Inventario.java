@@ -1,4 +1,4 @@
-package com.tiendamusica.domain.model.entity;
+package com.tiendamusica.domain.model.aggregate;
 
 import com.tiendamusica.domain.model.valueobject.Cantidad;
 
